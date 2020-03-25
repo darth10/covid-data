@@ -13,9 +13,10 @@
     (-> in io/reader json/parse-stream)))
 
 (defn get-sanitized-data-key [data-key]
-  (keyword (-> data-key
-               (s/replace #"[,\(\)]" "")
-               (s/replace " " "-"))))
+  (-> data-key
+      (s/replace #"[,\*\(\)]" "")
+      (s/replace " " "-")
+      keyword))
 
 (defn is-date-before [until-date data-value]
   (.isBefore (f/parse-local (get data-value "date")) until-date))
