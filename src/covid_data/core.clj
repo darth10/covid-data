@@ -19,7 +19,10 @@
       keyword))
 
 (defn is-date-before [until-date data-value]
-  (.isBefore (f/parse-local (get data-value "date")) until-date))
+  (-> data-value
+      (get "date")
+      f/parse-local
+      (.isBefore until-date)))
 
 (defn transform-covid-data [until-date [data-key data-value]]
   (let [data-until-date (filter (partial is-date-before until-date)
