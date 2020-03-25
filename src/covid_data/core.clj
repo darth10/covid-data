@@ -18,14 +18,11 @@
       (s/replace " " "-")
       keyword))
 
-(defn is-date-before [until-date data-value]
-  (-> data-value
-      (get "date")
-      f/parse-local
-      (.isBefore until-date)))
+(defn is-date-before? [until-date data-value]
+  (-> data-value (get "date") f/parse-local (.isBefore until-date)))
 
 (defn transform-covid-data [until-date [data-key data-value]]
-  (let [data-until-date (filter (partial is-date-before until-date)
+  (let [data-until-date (filter (partial is-date-before? until-date)
                                 data-value)
         total-cases (->> data-until-date
                          (map #(get % "confirmed" 0))
