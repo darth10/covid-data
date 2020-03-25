@@ -12,13 +12,13 @@
   (with-open [in (io/input-stream url)]
     (-> in io/reader json/parse-stream)))
 
-(defn is-date-before [until-date data-value]
-  (.isBefore (f/parse-local (get data-value "date")) until-date))
-
 (defn get-sanitized-data-key [data-key]
   (keyword (-> data-key
                (s/replace #"[,\(\)]" "")
                (s/replace " " "-"))))
+
+(defn is-date-before [until-date data-value]
+  (.isBefore (f/parse-local (get data-value "date")) until-date))
 
 (defn transform-covid-data [until-date [data-key data-value]]
   (let [data-until-date (filter (partial is-date-before until-date)
