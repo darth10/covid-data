@@ -4,6 +4,6 @@
 
 ``` sh
 lein deps
-lein run 2020-02-30
+lein run 2020-04-01
 ```
 
